@@ -217,6 +217,23 @@ button {
   background: var(--accent-dim);
   color: var(--accent);
   border-color: var(--accent);
+  animation: mic-pulse 1.4s ease-out infinite;
+}
+
+@keyframes mic-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(209, 41, 80, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(209, 41, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(209, 41, 80, 0);
+  }
+}
+
+.listening-hint {
+  color: var(--high);
 }
 
 .spinner {
@@ -568,8 +585,13 @@ button {
 }
 
 .gate .btn-primary {
-  width: 100%;
-  margin-top: 12px;
+  display: flex;
+  width: auto;
+  min-width: 240px;
+  max-width: 100%;
+  margin: 12px auto 0;
+  padding: 12px 24px;
+  font-size: 14px;
 }
 
 .gate-skip {
@@ -619,8 +641,13 @@ button {
 }
 
 .btn-logout {
-  width: 100%;
-  margin-top: 10px;
+  display: flex;
+  width: auto;
+  min-width: 240px;
+  max-width: 100%;
+  margin: 10px auto 0;
+  padding: 12px 24px;
+  font-size: 14px;
   background: var(--surface-2);
   color: var(--text);
   border: 1px solid var(--border);

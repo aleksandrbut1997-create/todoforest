@@ -38,7 +38,7 @@ export default function AuthScreen({ profile, onSave, onSkip, onLogout }) {
         <input
           id="jura-name"
           type="text"
-          placeholder="Отаман Олександр"
+          placeholder="Отаман / Отаманка"
           value={name}
           onChange={(e) => setName(e.target.value)}
           autoComplete="name"
