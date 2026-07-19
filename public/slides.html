@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Джура — презентація</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&display=swap");
+:root {
+  --bg:#14110b; --surface:#1d1811; --surface2:#292117; --border:#3b3223;
+  --text:#f4efe3; --dim:#a99d85; --accent:#d12950; --accent-dim:#3d1120;
+  --gold:#d9a441; --gold-dim:#3a2f14; --blue:#5b9bd0; --blue-dim:#12222e;
+  --green:#8fae5b; --green-dim:#1c2a16; --high:#e0446a;
+}
+* { box-sizing:border-box; margin:0; }
+html,body { height:100%; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; overflow:hidden; }
+.slide { position:absolute; inset:0; display:none; flex-direction:column; padding:48px 64px; overflow-y:auto; }
+.slide.active { display:flex; }
+.center { justify-content:center; align-items:center; text-align:center; }
+h1.word { font-family:"Unbounded",sans-serif; font-size:clamp(48px,9vw,88px); }
+h2 { font-size:clamp(26px,4vw,38px); margin-bottom:28px; }
+.mark { color:var(--accent); }
+.tagline { color:var(--gold); font-size:clamp(16px,2.4vw,22px); font-weight:700; margin-top:10px; }
+.dimtext { color:var(--dim); }
+.cards { display:grid; gap:16px; }
+.c2 { grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+.c3 { grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:22px; text-align:left; }
+.card h3 { font-size:19px; margin:12px 0 8px; }
+.card p { color:var(--dim); font-size:14.5px; line-height:1.55; }
+.ic { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.ic svg { width:26px; height:26px; }
+.malyna { background:var(--accent-dim); color:var(--high); }
+.zoloto { background:var(--gold-dim); color:var(--gold); }
+.blakyt { background:var(--blue-dim); color:var(--blue); }
+.zelen { background:var(--green-dim); color:var(--green); }
+.row { display:flex; gap:14px; align-items:flex-start; }
+.gold { color:var(--gold); } .acc { color:var(--accent); } .hi { color:var(--high); } .bl { color:var(--blue); } .gr { color:var(--green); }
+.stat { text-align:center; }
+.stat .n { font-size:clamp(40px,6vw,60px); font-weight:800; }
+.chips { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center; margin-bottom:26px; }
+.chip { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:12px 16px; font-weight:700; font-size:14px; }
+.arr { color:var(--accent); font-weight:800; }
+pre { background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:18px; color:var(--text); font-size:13.5px; line-height:1.6; overflow-x:auto; }
+.swatch { display:flex; align-items:center; gap:12px; margin-bottom:12px; font-size:15px; }
+.dot { width:26px; height:26px; border-radius:50%; border:1px solid var(--border); flex-shrink:0; }
+.hex { color:var(--dim); font-family:monospace; font-size:12.5px; }
+.nav { position:fixed; bottom:18px; left:0; right:0; display:flex; justify-content:center; gap:8px; z-index:5; }
+.nav button { width:10px; height:10px; border-radius:50%; border:none; background:var(--border); cursor:pointer; padding:0; }
+.nav button.on { background:var(--accent); }
+.hintkeys { position:fixed; bottom:14px; right:20px; color:var(--dim); font-size:11px; }
+.link { color:var(--accent); font-weight:800; text-decoration:none; }
+ul.clean { list-style:none; text-align:left; }
+ul.clean li { color:var(--dim); font-size:15.5px; line-height:1.6; margin-bottom:12px; padding-left:22px; position:relative; }
+ul.clean li::before { content:"—"; position:absolute; left:0; color:var(--gold); }
+.subttl { color:var(--gold); font-size:17px; font-weight:700; margin-bottom:14px; }
+@media (max-width:640px){ .slide{padding:28px 20px;} }
+</style>
+</head>
+<body>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="sabres" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4c6 1 11 6 13 13"/><path d="M17 17l3 3"/><path d="M15.5 18.5l3-3"/><path d="M20 4c-6 1-11 6-13 13"/><path d="M7 17l-3 3"/><path d="M8.5 18.5l-3-3"/></g></symbol>
+  <symbol id="bubble" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 5h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-8l-4 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="chest" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M3 13h18"/><path d="M12 13v2.5"/></g></symbol>
+  <symbol id="flag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 4h12l-3 3.5 3 3.5H6"/></g></symbol>
+  <symbol id="mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4"/></g></symbol>
+  <symbol id="zap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M13 2 4.5 13.5h7L11 22l8.5-11.5h-7z"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></g></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5.5-6.5"/></g></symbol>
+  <symbol id="sliders" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="15.5" cy="7" r="1.8" fill="#1d1811"/><circle cx="8.5" cy="12" r="1.8" fill="#1d1811"/><circle cx="13" cy="17" r="1.8" fill="#1d1811"/></g></symbol>
+  <symbol id="undo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M3.5 13a9 9 0 1 0 2.1-7"/></g></symbol>
+  <symbol id="user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.6 7.6 0 0 1 15 0"/></g></symbol>
+  <symbol id="phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10.8 18.3h2.4"/></g></symbol>
+  <symbol id="cloud" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M17.5 19a4.5 4.5 0 0 0 .4-9A6 6 0 0 0 6.1 11.4 3.8 3.8 0 0 0 7 19z"/></symbol>
+  <symbol id="rotate" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M20.5 13a9 9 0 1 1-2.1-7"/></g></symbol>
+  <symbol id="cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></g></symbol>
+  <symbol id="gcal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/><path d="m9 15 2.3 2.3 4.2-4.5"/></g></symbol>
+  <symbol id="send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2.5 2.5 9.5l8.5 3.5 3.8 8.5z"/><path d="M11 13 22 2.5"/></g></symbol>
+</svg>
+
+<section class="slide center active">
+  <svg class="mark" width="110" height="110"><use href="#sabres"/></svg>
+  <h1 class="word">Джура</h1>
+  <div class="tagline">Козацький AI-планер дня</div>
+  <p class="dimtext" style="max-width:560px;margin-top:18px">Кажи все, що в голові, текстом або голосом — джура розбере на задачі і збере план на сьогодні.</p>
+  <p style="margin-top:44px;font-size:14px"><span class="acc" style="font-weight:800">todoforest-a.vercel.app</span><span class="dimtext"> · Олександр · воркшоп-MVP · липень 2026</span></p>
+</section>
+
+<section class="slide">
+  <h2>Проблема і рішення</h2>
+  <div class="cards c2">
+    <div class="card">
+      <div class="ic malyna"><svg><use href="#x"/></svg></div>
+      <h3>Біль класичних тудушок</h3>
+      <p>Щоб додати задачу «правильно», юзер сам проставляє проєкт, дату, пріоритет і теги. Тертя на вході завелике: половина кидає на середині, решта звалює все в Inbox і ніколи не розбирає.</p>
+    </div>
+    <div class="card">
+      <div class="ic zoloto"><svg><use href="#zap"/></svg></div>
+      <h3>Рішення Джури</h3>
+      <p>Юзер вивалює потік думок — текстом або голосом. AI сам перетворює хаос на структуровані задачі з датою, часом і пріоритетом та щодня збирає чіткий план на сьогодні.</p>
+    </div>
+  </div>
+  <p class="tagline" style="text-align:center;margin-top:34px;font-style:italic">Ти — отаман. Джура — розбирається.</p>
+</section>
+
+<section class="slide">
+  <h2>Три екрани — нуль тертя</h2>
+  <div class="cards c3">
+    <div class="card" style="text-align:center">
+      <div class="ic malyna" style="margin:0 auto"><svg><use href="#bubble"/></svg></div>
+      <h3>Кажи <span class="dimtext" style="font-size:13px;font-weight:600">· Capture</span></h3>
+      <p>Одне поле і мікрофон. Один вхід може містити хоч десять задач — диктуй усе підряд без структури.</p>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="ic zoloto" style="margin:0 auto"><svg><use href="#chest"/></svg></div>
+      <h3>Обоз <span class="dimtext" style="font-size:13px;font-weight:600">· Inbox</span></h3>
+      <p>Увесь беклог, який розклав AI: дата, час, пріоритет. Схибив — правиш тапом по картці. Протерміновані завжди зверху.</p>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="ic blakyt" style="margin:0 auto"><svg><use href="#flag"/></svg></div>
+      <h3>Похід <span class="dimtext" style="font-size:13px;font-weight:600">· Today</span></h3>
+      <p>План на сьогодні: спершу наздогнати вчорашнє, далі за часом. Чекбокси, виконане — в архів дня.</p>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:30px;font-size:15px"><span class="dimtext">Пріоритети: </span><b class="hi">горить</b><span class="dimtext"> · </span><b class="gold">до діла</b><span class="dimtext"> · </span><b class="bl">потерпить</b></p>
+</section>
+
+<section class="slide">
+  <h2>Бренд: легенда і голос</h2>
+  <div class="cards c2">
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="subttl">Легенда</div>
+        <p style="font-size:15.5px">Джура — помічник козака: виконує доручення, вчиться, допомагає. Користувач — отаман, застосунок — його джура.</p>
+      </div>
+      <div class="card">
+        <div class="subttl">Тон інтерфейсу</div>
+        <p style="color:var(--text);font-size:15px">«Джуро, розбери!» · «Слухаю, отамане…»<br/>«Вітаю в лавах!» · «Задачу викреслено · Повернути»</p>
+        <p style="margin-top:10px">Козацький колорит без перебору: коротко, тепло, по суті.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="subttl">Палітра «ніч у степу»</div>
+      <div class="swatch"><span class="dot" style="background:#14110b"></span>Ніч у степу — фон <span class="hex">#14110B</span></div>
+      <div class="swatch"><span class="dot" style="background:#d12950"></span>Козацький малиновий — акцент <span class="hex">#D12950</span></div>
+      <div class="swatch"><span class="dot" style="background:#d9a441"></span>Золото пшениці — medium <span class="hex">#D9A441</span></div>
+      <div class="swatch"><span class="dot" style="background:#5b9bd0"></span>Блакить Дніпра — low <span class="hex">#5B9BD0</span></div>
+      <div class="swatch"><span class="dot" style="background:#8fae5b"></span>Степова зелень — success <span class="hex">#8FAE5B</span></div>
+      <p style="margin-top:14px;font-size:13px">Вордмарк — шрифт Unbounded. Знак — схрещені шаблі. Іконки — лінійні, як у застосунку.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Що вже в MVP</h2>
+  <div class="cards c3">
+    <div class="card"><div class="row"><div class="ic malyna"><svg><use href="#zap"/></svg></div><div><h3 style="margin-top:4px">AI-парсинг</h3></div></div><p style="margin-top:10px">Один вхід → кілька задач. Сервер підставляє реальну дату: «завтра» завжди правильне.</p></div>
+    <div class="card"><div class="row"><div class="ic zoloto"><svg><use href="#mic"/></svg></div><div><h3 style="margin-top:4px">Голос українською</h3></div></div><p style="margin-top:10px">Web Speech API, текст наживо. Працює в Chrome і на iPhone у Safari.</p></div>
+    <div class="card"><div class="row"><div class="ic blakyt"><svg><use href="#sliders"/></svg></div><div><h3 style="margin-top:4px">Редагування тапом</h3></div></div><p style="margin-top:10px">Дата, час і пріоритет правляться прямо в картці задачі.</p></div>
+    <div class="card"><div class="row"><div class="ic zelen"><svg><use href="#undo"/></svg></div><div><h3 style="margin-top:4px">Undo і фідбек</h3></div></div><p style="margin-top:10px">Тост «Повернути» при видаленні, підсвітка щойно доданих задач.</p></div>
+    <div class="card"><div class="row"><div class="ic malyna"><svg><use href="#user"/></svg></div><div><h3 style="margin-top:4px">Онбординг і реєстр</h3></div></div><p style="margin-top:10px">Знайомство з продуктом і ім'я отамана. Профіль живе на пристрої.</p></div>
+    <div class="card"><div class="row"><div class="ic zoloto"><svg><use href="#phone"/></svg></div><div><h3 style="margin-top:4px">Mobile-first</h3></div></div><p style="margin-top:10px">Однією рукою: тач-таргети від 44px, safe-area, липкий хедер.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Під капотом</h2>
+  <div class="chips">
+    <span class="chip">Текст / голос</span><span class="arr">→</span>
+    <span class="chip">/api/parse · Next.js</span><span class="arr">→</span>
+    <span class="chip">Claude Haiku · OpenRouter</span><span class="arr">→</span>
+    <span class="chip">JSON-задачі</span><span class="arr">→</span>
+    <span class="chip">localStorage</span>
+  </div>
+  <div class="cards c2">
+    <div class="card">
+      <div class="subttl">Ключові рішення</div>
+      <ul class="clean">
+        <li>Ключ API живе тільки в env-змінних на сервері — ніколи в клієнті.</li>
+        <li>Сервер сам передає в промпт реальну дату й день тижня — модель не вгадує, що таке «завтра» чи «у п'ятницю».</li>
+        <li>Відповіді моделі не довіряємо: парсимо, валідуємо поля, чистимо сміття навколо JSON.</li>
+        <li>Без бекенд-БД свідомо: localStorage = швидкий MVP без інфраструктури.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="subttl">Схема задачі</div>
+<pre>{
+  "title":    string,
+  "priority": high | medium | low,
+  "dueDate":  YYYY-MM-DD | null,
+  "time":     HH:MM | null,
+  "notes":    string | null,
+  "done":     boolean
+}</pre>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Якість: перевірено руками</h2>
+  <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+    <div class="card stat"><div class="n acc">35+</div><p>тест-кейсів пройдено</p></div>
+    <div class="card stat"><div class="n gold">6</div><p>флоу-блоків покрито</p></div>
+    <div class="card stat"><div class="n bl">2</div><p>платформи: iOS і десктоп</p></div>
+    <div class="card stat"><div class="n gr">0</div><p>відкритих багів</p></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="row">
+      <div class="ic zelen"><svg><use href="#check"/></svg></div>
+      <div>
+        <h3 style="margin-top:2px">Що ганяли на проді</h3>
+        <p style="margin-top:8px">Відносні дати («завтра», «у п'ятницю», «післязавтра») · голос на iOS Safari і в Chrome · undo видалення · сортування Обозу · порожні стани · safe-area · збереження після перезавантаження.</p>
+        <p style="margin-top:8px"><b style="color:var(--text)">Знайдене — виправлено одразу:</b> сортування за близькістю дати, мобільні кнопки реєстру, редагування часу в картці.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Роадмап</h2>
+  <div class="cards c2">
+    <div class="card"><div class="row"><div class="ic malyna"><svg><use href="#cloud"/></svg></div><div><h3 style="margin-top:2px">Справжні акаунти й синхронізація</h3><p style="margin-top:6px">Supabase, задачі в БД. Дизайн входу і реєстрації вже готовий.</p></div></div></div>
+    <div class="card"><div class="row"><div class="ic zoloto"><svg><use href="#rotate"/></svg></div><div><h3 style="margin-top:2px">Автоперенесення хвостів</h3><p style="margin-top:6px">Невиконане сьогодні джура сам тягне на завтра.</p></div></div></div>
+    <div class="card"><div class="row"><div class="ic blakyt"><svg><use href="#cal"/></svg></div><div><h3 style="margin-top:2px">Тиждень і деталі задачі</h3><p style="margin-top:6px">Вигляд тижня, сторінка задачі, теги й фільтри.</p></div></div></div>
+    <div class="card"><div class="row"><div class="ic zelen"><svg><use href="#gcal"/></svg></div><div><h3 style="margin-top:2px">Google Calendar</h3><p style="margin-top:6px">Задачі з часом автоматично їдуть у календар.</p></div></div></div>
+    <div class="card"><div class="row"><div class="ic blakyt"><svg><use href="#send"/></svg></div><div><h3 style="margin-top:2px">Telegram-бот</h3><p style="margin-top:6px">Кидаєш джурі задачі прямо в чат — вони в Обозі.</p></div></div></div>
+    <div class="card"><div class="row"><div class="ic malyna"><svg><use href="#mic"/></svg></div><div><h3 style="margin-top:2px">Голос 2.0</h3><p style="margin-top:6px">Диктування без кнопки, виправлення на льоту.</p></div></div></div>
+  </div>
+  <p class="dimtext" style="text-align:center;margin-top:22px;font-size:13px;font-style:italic">Перший крок уже спроєктований: макети входу/реєстрації готові.</p>
+</section>
+
+<section class="slide center">
+  <svg class="mark" width="90" height="90"><use href="#sabres"/></svg>
+  <h2 style="font-size:clamp(28px,5vw,44px);margin-top:22px">Думай уголос. Обоз повезе джура.</h2>
+  <a class="link" style="font-size:clamp(18px,3vw,26px)" href="https://todoforest-a.vercel.app" target="_blank" rel="noopener">todoforest-a.vercel.app</a>
+  <p class="dimtext" style="margin-top:22px">Демо ≤ 7 хвилин — у Loom. Слава Україні!</p>
+</section>
+
+<div class="nav" id="nav"></div>
+<div class="hintkeys">← → або клік по краях</div>
+
+<script>
+const slides = [...document.querySelectorAll(".slide")];
+const nav = document.getElementById("nav");
+let cur = 0;
+slides.forEach((_, i) => {
+  const b = document.createElement("button");
+  b.setAttribute("aria-label", "Слайд " + (i + 1));
+  b.onclick = () => go(i);
+  nav.appendChild(b);
+});
+function go(i) {
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach((s, j) => s.classList.toggle("active", j === cur));
+  [...nav.children].forEach((b, j) => b.classList.toggle("on", j === cur));
+}
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") go(cur + 1);
+  if (e.key === "ArrowLeft" || e.key === "PageUp") go(cur - 1);
+  if (e.key === "Home") go(0);
+  if (e.key === "End") go(slides.length - 1);
+});
+document.addEventListener("click", (e) => {
+  if (e.target.closest("a,button,pre")) return;
+  const x = e.clientX / window.innerWidth;
+  if (x > 0.75) go(cur + 1);
+  else if (x < 0.25) go(cur - 1);
+});
+let tx = null;
+document.addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; });
+document.addEventListener("touchend", (e) => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (dx < -50) go(cur + 1);
+  if (dx > 50) go(cur - 1);
+  tx = null;
+});
+go(0);
+</script>
+</body>
+</html>

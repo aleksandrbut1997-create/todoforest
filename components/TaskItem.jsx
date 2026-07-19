@@ -60,6 +60,11 @@ export default function TaskItem({
                 onEdit(task.id, { dueDate: e.target.value || null })
               }
             />
+            <input
+              type="time"
+              value={task.time ?? ""}
+              onChange={(e) => onEdit(task.id, { time: e.target.value || null })}
+            />
             <select
               value={task.priority}
               onChange={(e) => onEdit(task.id, { priority: e.target.value })}
