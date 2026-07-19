@@ -17,13 +17,24 @@ export default function InboxScreen({
 }) {
   const [showDone, setShowDone] = useState(false);
 
+  // Порядок: протерміновані → сьогодні → майбутні (за датою) → без дати.
+  // У межах одного дня — за пріоритетом, потім за часом.
+  const bucketOf = (t) => {
+    if (!t.dueDate) return 3;
+    if (t.dueDate < todayIso) return 0;
+    if (t.dueDate === todayIso) return 1;
+    return 2;
+  };
+
   const sorted = [...tasks].sort((a, b) => {
+    const bDiff = bucketOf(a) - bucketOf(b);
+    if (bDiff !== 0) return bDiff;
+    if (a.dueDate && b.dueDate && a.dueDate !== b.dueDate) {
+      return a.dueDate < b.dueDate ? -1 : 1;
+    }
     const pDiff = PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority];
     if (pDiff !== 0) return pDiff;
-    if (a.dueDate && b.dueDate) return a.dueDate < b.dueDate ? -1 : 1;
-    if (a.dueDate) return -1;
-    if (b.dueDate) return 1;
-    return 0;
+    return (a.time ?? "99:99").localeCompare(b.time ?? "99:99");
   });
 
   const active = sorted.filter((t) => !t.done);
