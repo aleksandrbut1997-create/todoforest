@@ -1,8 +1,8 @@
 import { buildSystemPrompt } from "../../../lib/prompt";
 import { todayISO } from "../../../lib/dateUtils";
 
-const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
-const MODEL = "claude-haiku-4-5-20251001";
+const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
+const MODEL = "anthropic/claude-haiku-4.5";
 
 export async function POST(request) {
   let body;
@@ -24,49 +24,52 @@ export async function POST(request) {
       ? body.todayIso
       : todayISO();
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
     return Response.json(
-      { error: "ANTHROPIC_API_KEY не налаштований на сервері" },
+      { error: "OPENROUTER_API_KEY не налаштований на сервері" },
       { status: 500 }
     );
   }
 
   const systemPrompt = buildSystemPrompt(clientToday);
 
-  let anthropicRes;
+  let openRouterRes;
   try {
-    anthropicRes = await fetch(ANTHROPIC_API_URL, {
+    openRouterRes = await fetch(OPENROUTER_API_URL, {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
+        authorization: `Bearer ${apiKey}`,
+        "HTTP-Referer": "https://todoforest-a.vercel.app",
+        "X-Title": "TodoForest",
       },
       body: JSON.stringify({
         model: MODEL,
         max_tokens: 2048,
-        system: systemPrompt,
-        messages: [{ role: "user", content: rawText }],
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: rawText },
+        ],
       }),
     });
   } catch (e) {
     return Response.json(
-      { error: "Не вдалося зв'язатися з Anthropic API", details: String(e) },
+      { error: "Не вдалося зв'язатися з OpenRouter API", details: String(e) },
       { status: 502 }
     );
   }
 
-  if (!anthropicRes.ok) {
-    const errText = await anthropicRes.text().catch(() => "");
+  if (!openRouterRes.ok) {
+    const errText = await openRouterRes.text().catch(() => "");
     return Response.json(
-      { error: "Anthropic API повернув помилку", status: anthropicRes.status, details: errText },
+      { error: "OpenRouter API повернув помилку", status: openRouterRes.status, details: errText },
       { status: 502 }
     );
   }
 
-  const data = await anthropicRes.json();
-  const textOut = data?.content?.[0]?.text ?? "";
+  const data = await openRouterRes.json();
+  const textOut = data?.choices?.[0]?.message?.content ?? "";
 
   const tasks = parseTasksFromModelOutput(textOut);
   if (tasks === null) {

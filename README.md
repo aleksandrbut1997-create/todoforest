@@ -11,13 +11,14 @@ AI сам перетворює хаос на структуровані зада
 
 Next.js 14 (App Router) + React, без бекенд-БД — задачі зберігаються в
 `localStorage` браузера. Один серверний ендпоінт `/api/parse` викликає
-Claude (`claude-haiku-4-5`) для розбору тексту на задачі.
+Claude (`anthropic/claude-haiku-4.5`) через OpenRouter для розбору тексту на
+задачі.
 
 ## Локальний запуск
 
 ```bash
 npm install
-cp .env.local.example .env.local   # і встав свій ANTHROPIC_API_KEY
+cp .env.local.example .env.local   # і встав свій OPENROUTER_API_KEY
 npm run dev
 ```
 
@@ -28,7 +29,7 @@ npm run dev
 Проєкт підключено до Vercel через GitHub — кожен push у `main` деплоїться
 автоматично. На Vercel потрібна одна env-змінна:
 
-- `ANTHROPIC_API_KEY` — ключ із console.anthropic.com (Settings -> API keys).
+- `OPENROUTER_API_KEY` — ключ із openrouter.ai (API Keys -> Create Key).
 
 Додай її в Project Settings -> Environment Variables на Vercel, інакше
 `/api/parse` поверне 500.
@@ -42,7 +43,7 @@ app/
 components/          — UI-компоненти (TaskItem, CaptureScreen, ...)
 lib/
   prompt.js          — системний промпт для AI (дата рахується на сервері)
-  dateUtils.js        — робота з датами (today/tomorrow/weekday)
+  dateUtils.js       — робота з датами (today/tomorrow/weekday)
   storage.js          — persist задач у localStorage
 PRD.md               — концепт, скоуп MVP, схема задачі
 ```
