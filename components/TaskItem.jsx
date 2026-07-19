@@ -1,14 +1,27 @@
 "use client";
 
+import { useState } from "react";
 import { formatDueLabel, isOverdue } from "../lib/dateUtils";
 
-const PRIORITY_LABEL = { high: "терміново", medium: "звичайно", low: "не горить" };
+const PRIORITY_LABEL = { high: "горить", medium: "до діла", low: "потерпить" };
 
-export default function TaskItem({ task, todayIso, onToggleDone, onDelete, onEdit }) {
+export default function TaskItem({
+  task,
+  todayIso,
+  highlight,
+  onToggleDone,
+  onDelete,
+  onEdit,
+}) {
+  const [editing, setEditing] = useState(false);
   const overdue = !task.done && isOverdue(task.dueDate, todayIso);
 
   return (
-    <div className={`task-card ${task.done ? "done" : ""}`}>
+    <div
+      className={`task-card ${task.done ? "done" : ""} ${
+        highlight ? "flash" : ""
+      }`}
+    >
       <button
         type="button"
         className={`checkbox ${task.done ? "checked" : ""}`}
@@ -18,8 +31,13 @@ export default function TaskItem({ task, todayIso, onToggleDone, onDelete, onEdi
         {task.done ? "✓" : ""}
       </button>
 
-      <div className="task-main">
-        <div className={`task-title ${task.done ? "done" : ""}`}>{task.title}</div>
+      <div
+        className={`task-main ${onEdit ? "editable" : ""}`}
+        onClick={onEdit ? () => setEditing((v) => !v) : undefined}
+      >
+        <div className={`task-title ${task.done ? "done" : ""}`}>
+          {task.title}
+        </div>
 
         <div className="task-meta">
           <span className={`chip priority-${task.priority}`}>
@@ -33,20 +51,22 @@ export default function TaskItem({ task, todayIso, onToggleDone, onDelete, onEdi
 
         {task.notes && <div className="task-notes">{task.notes}</div>}
 
-        {onEdit && (
-          <div className="date-edit">
+        {onEdit && editing && (
+          <div className="task-edit" onClick={(e) => e.stopPropagation()}>
             <input
               type="date"
               value={task.dueDate ?? ""}
-              onChange={(e) => onEdit(task.id, { dueDate: e.target.value || null })}
+              onChange={(e) =>
+                onEdit(task.id, { dueDate: e.target.value || null })
+              }
             />
             <select
               value={task.priority}
               onChange={(e) => onEdit(task.id, { priority: e.target.value })}
             >
-              <option value="high">терміново</option>
-              <option value="medium">звичайно</option>
-              <option value="low">не горить</option>
+              <option value="high">горить</option>
+              <option value="medium">до діла</option>
+              <option value="low">потерпить</option>
             </select>
           </div>
         )}
@@ -57,7 +77,7 @@ export default function TaskItem({ task, todayIso, onToggleDone, onDelete, onEdi
           type="button"
           className="icon-btn"
           onClick={() => onDelete(task.id)}
-          aria-label="Видалити задачу"
+          aria-label="Викреслити задачу"
         >
           ✕
         </button>

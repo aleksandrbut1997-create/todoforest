@@ -1,12 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import TaskItem from "./TaskItem";
+import { ChestIcon } from "./icons";
 
 const PRIORITY_ORDER = { high: 0, medium: 1, low: 2 };
 
-export default function InboxScreen({ tasks, todayIso, onToggleDone, onDelete, onEdit, onGoToCapture }) {
+export default function InboxScreen({
+  tasks,
+  todayIso,
+  newIds = [],
+  onToggleDone,
+  onDelete,
+  onEdit,
+  onGoToCapture,
+}) {
+  const [showDone, setShowDone] = useState(false);
+
   const sorted = [...tasks].sort((a, b) => {
-    if (a.done !== b.done) return a.done ? 1 : -1;
     const pDiff = PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority];
     if (pDiff !== 0) return pDiff;
     if (a.dueDate && b.dueDate) return a.dueDate < b.dueDate ? -1 : 1;
@@ -15,34 +26,68 @@ export default function InboxScreen({ tasks, todayIso, onToggleDone, onDelete, o
     return 0;
   });
 
+  const active = sorted.filter((t) => !t.done);
+  const done = sorted.filter((t) => t.done);
+
   if (tasks.length === 0) {
     return (
       <div className="empty-state">
-        <div className="emoji">📥</div>
-        <h3>Inbox порожній</h3>
+        <div className="empty-icon">
+          <ChestIcon size={44} />
+        </div>
+        <h3>В обозі порожньо</h3>
         <p>
-          Тут з'являється весь беклог задач, які AI розпарсив із твоїх
-          нотаток. Почни з Capture.
+          Гукни джурі, що в голові, — він розкладе все по задачах із датами й
+          пріоритетами.
         </p>
         <button type="button" className="btn btn-primary" onClick={onGoToCapture}>
-          Перейти в Capture
+          Кажи джурі
         </button>
       </div>
     );
   }
 
   return (
-    <div className="task-list">
-      {sorted.map((task) => (
-        <TaskItem
-          key={task.id}
-          task={task}
-          todayIso={todayIso}
-          onToggleDone={onToggleDone}
-          onDelete={onDelete}
-          onEdit={onEdit}
-        />
-      ))}
-    </div>
+    <>
+      <div className="task-list">
+        {active.map((task) => (
+          <TaskItem
+            key={task.id}
+            task={task}
+            todayIso={todayIso}
+            highlight={newIds.includes(task.id)}
+            onToggleDone={onToggleDone}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
+        ))}
+      </div>
+
+      {done.length > 0 && (
+        <>
+          <button
+            type="button"
+            className="done-toggle"
+            onClick={() => setShowDone((v) => !v)}
+          >
+            <span>Виконано ({done.length})</span>
+            <span>{showDone ? "▴" : "▾"}</span>
+          </button>
+          {showDone && (
+            <div className="task-list">
+              {done.map((task) => (
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  todayIso={todayIso}
+                  onToggleDone={onToggleDone}
+                  onDelete={onDelete}
+                />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </>
   );
 }

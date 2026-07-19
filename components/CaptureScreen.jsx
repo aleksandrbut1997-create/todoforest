@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { MicIcon } from "./icons";
 
-export default function CaptureScreen({ onSubmit, isLoading, error, lastAddedCount }) {
+export default function CaptureScreen({ onSubmit, isLoading, error }) {
   const [text, setText] = useState("");
   const [listening, setListening] = useState(false);
   const [micSupported, setMicSupported] = useState(false);
@@ -61,8 +62,9 @@ export default function CaptureScreen({ onSubmit, isLoading, error, lastAddedCou
   return (
     <div className="capture-box">
       <textarea
-        placeholder="Що в голові? Диктуй або пиши все підряд: «завтра подзвонити в банк, терміново відповісти клієнту, у п'ятницю здати звіт»…"
+        placeholder="Кажи все підряд, як думається: «завтра на курінь їхати, шаблі поточити — терміново, у п'ятницю гінця до кошового слати» — джура розбере."
         value={text}
+        disabled={isLoading}
         onChange={(e) => setText(e.target.value)}
       />
 
@@ -73,7 +75,14 @@ export default function CaptureScreen({ onSubmit, isLoading, error, lastAddedCou
           disabled={!text.trim() || isLoading}
           onClick={handleSubmit}
         >
-          {isLoading ? "Розбираю…" : "Розібрати на задачі"}
+          {isLoading ? (
+            <>
+              <span className="spinner" />
+              Слухаю, отамане…
+            </>
+          ) : (
+            "Джуро, розбери!"
+          )}
         </button>
         {micSupported && (
           <button
@@ -82,22 +91,16 @@ export default function CaptureScreen({ onSubmit, isLoading, error, lastAddedCou
             onClick={toggleMic}
             aria-label="Диктувати голосом"
           >
-            🎤
+            <MicIcon />
           </button>
         )}
       </div>
 
       {error && <div className="error-box">{error}</div>}
 
-      {!error && lastAddedCount > 0 && (
-        <div className="hint">
-          Додано задач: {lastAddedCount}. Дивись в Inbox або Today.
-        </div>
-      )}
-
       <div className="hint">
-        AI сам визначить пріоритет, дедлайн і час для кожної задачі — не
-        потрібно структурувати текст самому.
+        Джура сам поставить пріоритет, дату й час кожній справі — не треба
+        нічого структурувати.
       </div>
     </div>
   );

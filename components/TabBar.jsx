@@ -1,9 +1,11 @@
 "use client";
 
+import { SpeakIcon, ChestIcon, FlagIcon } from "./icons";
+
 const TABS = [
-  { id: "capture", label: "Capture", icon: "✍️" },
-  { id: "inbox", label: "Inbox", icon: "📥" },
-  { id: "today", label: "Today", icon: "☀️" },
+  { id: "capture", label: "Кажи", Icon: SpeakIcon },
+  { id: "inbox", label: "Обоз", Icon: ChestIcon },
+  { id: "today", label: "Похід", Icon: FlagIcon },
 ];
 
 export default function TabBar({ active, onChange, inboxCount, todayCount }) {
@@ -13,17 +15,17 @@ export default function TabBar({ active, onChange, inboxCount, todayCount }) {
   return (
     <nav className="tab-bar">
       <div className="tab-bar-inner">
-        {TABS.map((tab) => {
-          const count = countFor(tab.id);
+        {TABS.map(({ id, label, Icon }) => {
+          const count = countFor(id);
           return (
             <button
-              key={tab.id}
+              key={id}
               type="button"
-              className={`tab-btn ${active === tab.id ? "active" : ""}`}
-              onClick={() => onChange(tab.id)}
+              className={`tab-btn ${active === id ? "active" : ""}`}
+              onClick={() => onChange(id)}
             >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
+              <Icon />
+              <span>{label}</span>
               {count > 0 && <span className="badge">{count}</span>}
             </button>
           );

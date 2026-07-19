@@ -1,16 +1,16 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "TodoForest — AI-планер дня",
+  title: "Джура — козацький AI-планер дня",
   description:
-    "Вивали все, що в голові, текстом або голосом — AI перетворить хаос на план на сьогодні.",
+    "Кажи все, що в голові, текстом або голосом — джура розбере на задачі і збере план на сьогодні.",
 };
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  themeColor: "#0f1115",
+  viewportFit: "cover",
+  themeColor: "#14110b",
 };
 
 export default function RootLayout({ children }) {

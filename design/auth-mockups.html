@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Джура — макети входу та реєстрації (роадмап, поза MVP)</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&display=swap");
+body { margin:0; padding:32px 16px; background:#0d0b08; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+.note { text-align:center; color:#a99d85; font-size:13px; margin:0 0 24px; }
+.wrap { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; }
+.col { display:flex; flex-direction:column; gap:10px; align-items:center; }
+.label { font-size:13px; color:#a99d85; text-transform:uppercase; letter-spacing:.05em; font-weight:700; }
+.phone { width:320px; border-radius:28px; border:1px solid #3b3223; background:#14110b; color:#f4efe3; padding:40px 22px 30px; box-sizing:border-box; }
+.phone * { box-sizing:border-box; }
+.brand { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:6px; color:#d12950; }
+.word { font-family:"Unbounded",sans-serif; font-size:22px; font-weight:700; color:#f4efe3; margin:0; }
+.sub { text-align:center; color:#a99d85; font-size:13px; margin:0 0 22px; line-height:1.5; }
+.field { margin-bottom:12px; }
+.field label { display:block; font-size:12px; color:#a99d85; margin-bottom:5px; font-weight:600; }
+.input { width:100%; background:#1d1811; border:1px solid #3b3223; border-radius:12px; color:#a99d85; padding:12px 14px; font-size:15px; }
+.btn { width:100%; border:none; border-radius:12px; padding:14px; font-size:15px; font-weight:700; background:#d12950; color:#fff; margin-top:6px; cursor:pointer; }
+.alt { width:100%; border:1px solid #3b3223; border-radius:12px; padding:12px; font-size:14px; font-weight:600; background:#292117; color:#f4efe3; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; }
+.hr { display:flex; align-items:center; gap:10px; color:#a99d85; font-size:11px; margin:16px 0 6px; }
+.hr::before,.hr::after { content:""; flex:1; height:1px; background:#3b3223; }
+.foot { text-align:center; font-size:13px; color:#a99d85; margin-top:18px; }
+.foot b { color:#d9a441; font-weight:700; cursor:pointer; }
+.tiny { text-align:center; font-size:12px; color:#a99d85; margin-top:10px; }
+</style>
+</head>
+<body>
+<p class="note">Дизайн-макети «Джура» — вхід і реєстрація. Статус: роадмап, поза скоупом MVP (у MVP дані живуть у localStorage без акаунтів).</p>
+<div class="wrap">
+  <div class="col">
+    <div class="label">Вхід</div>
+    <div class="phone">
+      <div class="brand">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4c6 1 11 6 13 13"/><path d="M17 17l3 3"/><path d="M15.5 18.5l3-3"/><path d="M20 4c-6 1-11 6-13 13"/><path d="M7 17l-3 3"/><path d="M8.5 18.5l-3-3"/></svg>
+        <p class="word">Джура</p>
+      </div>
+      <p class="sub">Повернувся, отамане?<br/>Джура чекав.</p>
+      <div class="field"><label>Пошта</label><div class="input">otaman@sich.ua</div></div>
+      <div class="field"><label>Пароль</label><div class="input">••••••••</div></div>
+      <button class="btn">До куреня!</button>
+      <div class="tiny">Забув пароль? Гукни — нагадаємо</div>
+      <div class="hr">або</div>
+      <button class="alt">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5h5"/></svg>
+        Увійти через Google
+      </button>
+      <div class="foot">Вперше на Січі? <b>Впишись у реєстр</b></div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="label">Реєстрація</div>
+    <div class="phone">
+      <div class="brand">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4c6 1 11 6 13 13"/><path d="M17 17l3 3"/><path d="M15.5 18.5l3-3"/><path d="M20 4c-6 1-11 6-13 13"/><path d="M7 17l-3 3"/><path d="M8.5 18.5l-3-3"/></svg>
+        <p class="word">Джура</p>
+      </div>
+      <p class="sub">Ставай до лав!<br/>Джура служитиме тобі вірою й правдою.</p>
+      <div class="field"><label>Як тебе звати</label><div class="input">Отаман Олександр</div></div>
+      <div class="field"><label>Пошта</label><div class="input">otaman@sich.ua</div></div>
+      <div class="field"><label>Пароль</label><div class="input">не коротший за 8 знаків</div></div>
+      <button class="btn">Вписатись у реєстр</button>
+      <div class="hr">або</div>
+      <button class="alt">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5h5"/></svg>
+        Продовжити з Google
+      </button>
+      <div class="foot">Вже в реєстрі? <b>Заходь</b></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
